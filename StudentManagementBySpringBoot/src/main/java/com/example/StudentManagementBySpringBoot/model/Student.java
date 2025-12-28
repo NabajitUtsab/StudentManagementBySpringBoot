@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Table(name = "student")
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 
 public class Student {
 
