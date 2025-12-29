@@ -27,26 +27,51 @@ public class StudentController {
 
     //getting all students
     @GetMapping
-    public ResponseEntity<List<Student>> getStudents() {
+    public ResponseEntity<List<Student>> getAllStudentsAPI() {
         List<Student> studentList = studentService.getAllstudents() ;
         return new ResponseEntity<>(studentList, HttpStatus.FOUND);
     }
 
     //getting by id
-    @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Student> getStudentAPI(@PathVariable Long id) {
         //Student student = studentService.getStudentById(id);
         //return new ResponseEntity<>(student, HttpStatus.FOUND);
         return studentService.getStudentById(id)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+
+    //getting by email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Student> getStudentByEmail(@PathVariable String email) {
+
+        return studentService.getStudentByEmail(email).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+
     //update by id
     @PutMapping("/{id}")
 
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id,
+    public ResponseEntity<Student> updateStudentAPI(@PathVariable Long id,
                                                 @Valid @RequestBody Student student) {
         Student student1 = studentService.updateStudentById(id,student);
         return new ResponseEntity<>(student1,HttpStatus.OK);
+    }
+
+
+    //delete by id
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteStudentAPI(@PathVariable Long id) {
+
+        studentService.deleteStudentById(id);
+        return new ResponseEntity<>(id +" No. Student deleted successfully",HttpStatus.OK);
+
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllStudentsAPI() {
+        studentService.deleteAllStudents();
+        return new ResponseEntity<>("All students deleted successfully",HttpStatus.OK);
     }
 }

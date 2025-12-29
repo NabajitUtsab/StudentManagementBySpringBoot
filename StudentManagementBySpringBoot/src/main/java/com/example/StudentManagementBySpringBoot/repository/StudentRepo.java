@@ -17,9 +17,10 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 
 
 
-    Student findByEmail(String email);
+    Optional findByEmail(String email);
 
     Optional findById(Long id);
+
 
     //Student findByBatch(int batch);
 

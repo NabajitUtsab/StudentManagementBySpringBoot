@@ -1,9 +1,10 @@
 package com.example.StudentManagementBySpringBoot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "student")
@@ -78,6 +79,12 @@ public class Student {
         this.enrollmentDate = enrollmentDate;
     }
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "batch_id")
+    @JsonIgnore
+
+    private Batch batch;
 
 }
 
