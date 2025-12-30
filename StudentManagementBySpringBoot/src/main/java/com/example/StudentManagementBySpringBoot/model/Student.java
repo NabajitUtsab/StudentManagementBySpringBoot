@@ -86,5 +86,12 @@ public class Student {
 
     private Batch batch;
 
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
 }
 

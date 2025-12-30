@@ -1,20 +1,27 @@
 package com.example.StudentManagementBySpringBoot.service;
 
+import com.example.StudentManagementBySpringBoot.model.Batch;
 import com.example.StudentManagementBySpringBoot.model.Student;
 import com.example.StudentManagementBySpringBoot.repository.BatchRepo;
 import com.example.StudentManagementBySpringBoot.repository.StudentRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+
 public class StudentService {
 
+
     @Autowired
-    private StudentRepo studentRepo;
-    private BatchRepo batchRepo;
+    private  StudentRepo studentRepo;
+    @Autowired
+    private  BatchRepo batchRepo;
 
     //create student
     public Student addStudent(Student student) {
@@ -69,4 +76,20 @@ public class StudentService {
     public void deleteAllStudents() {
         studentRepo.deleteAll();
     }
+
+
+
+    public Student assignBatchToStudent(Long studentId, Long batchId) throws Throwable {
+
+        Student student = (Student) studentRepo.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        Batch batch = (Batch) batchRepo.findById(batchId)
+                .orElseThrow(() -> new RuntimeException("Batch not found"));
+
+        student.setBatch(batch);     // ⭐ THIS is the key line
+
+        return studentRepo.save(student);
+    }
+
 }

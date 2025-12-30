@@ -9,26 +9,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
 
     @Autowired
-    private  StudentService studentService;
+    private StudentService studentService;
 
     //Add ing students
     @PostMapping
     public ResponseEntity<String> addStudent(@Valid @RequestBody Student student) {
-       studentService.addStudent(student);
+        studentService.addStudent(student);
 
-        return new ResponseEntity<>("Student added successfully",HttpStatus.CREATED);
+        return new ResponseEntity<>("Student added successfully", HttpStatus.CREATED);
     }
 
     //getting all students
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudentsAPI() {
-        List<Student> studentList = studentService.getAllstudents() ;
+        List<Student> studentList = studentService.getAllstudents();
         return new ResponseEntity<>(studentList, HttpStatus.FOUND);
     }
 
@@ -54,9 +55,9 @@ public class StudentController {
     @PutMapping("/{id}")
 
     public ResponseEntity<Student> updateStudentAPI(@PathVariable Long id,
-                                                @Valid @RequestBody Student student) {
-        Student student1 = studentService.updateStudentById(id,student);
-        return new ResponseEntity<>(student1,HttpStatus.OK);
+                                                    @Valid @RequestBody Student student) {
+        Student student1 = studentService.updateStudentById(id, student);
+        return new ResponseEntity<>(student1, HttpStatus.OK);
     }
 
 
@@ -65,13 +66,28 @@ public class StudentController {
     public ResponseEntity<String> deleteStudentAPI(@PathVariable Long id) {
 
         studentService.deleteStudentById(id);
-        return new ResponseEntity<>(id +" No. Student deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>(id + " No. Student deleted successfully", HttpStatus.OK);
 
     }
 
     @DeleteMapping
     public ResponseEntity<String> deleteAllStudentsAPI() {
         studentService.deleteAllStudents();
-        return new ResponseEntity<>("All students deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>("All students deleted successfully", HttpStatus.OK);
     }
+
+
+    //update batch id
+    @PutMapping("/{studentId}/batch/{batchId}")
+    public ResponseEntity<Student> assignBatch(
+            @PathVariable Long studentId,
+            @PathVariable Long batchId) throws Throwable {
+
+        Student updatedStudent =
+                studentService.assignBatchToStudent(studentId, batchId);
+
+        return ResponseEntity.ok(updatedStudent);
+    }
+
+
 }

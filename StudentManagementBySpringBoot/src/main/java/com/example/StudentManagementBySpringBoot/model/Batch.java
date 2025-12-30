@@ -2,7 +2,6 @@ package com.example.StudentManagementBySpringBoot.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.List;
