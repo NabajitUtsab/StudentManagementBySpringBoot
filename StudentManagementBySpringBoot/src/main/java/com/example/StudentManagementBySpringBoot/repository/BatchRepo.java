@@ -14,7 +14,9 @@ public interface BatchRepo extends JpaRepository<Batch, Integer> {
     boolean existsByName(String name);
 
 
-    Optional<Object> findById(Long id);
+    Optional findById(Long id);
 
-    void deleteById(Long id);
+    //Batch deleteById(Long id);
+
+    Batch removeById(Long id);
 }

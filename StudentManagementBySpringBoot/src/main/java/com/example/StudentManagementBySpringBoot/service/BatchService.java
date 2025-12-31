@@ -59,7 +59,7 @@ public class BatchService {
 
     //deleting by id
     public void deleteBatchById(Long id) {
-        batchRepo.deleteById(id);
+        batchRepo.removeById(id);
     }
 
     //deleting all batches

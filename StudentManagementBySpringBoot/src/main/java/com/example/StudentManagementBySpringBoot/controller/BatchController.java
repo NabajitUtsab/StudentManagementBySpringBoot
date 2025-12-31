@@ -65,7 +65,7 @@ public class BatchController {
     public ResponseEntity<String> deleteBatchAPI(@PathVariable Long id) {
 
         batchService.deleteBatchById(id);
-        return new ResponseEntity<>(id +" No. Student deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>(id +" No. Batch deleted successfully",HttpStatus.OK);
 
     }
 
