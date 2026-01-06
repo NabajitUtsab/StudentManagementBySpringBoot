@@ -89,5 +89,17 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
+    @PostMapping("/populate")
+    public ResponseEntity<String> populateStudentAPI(@RequestParam int n) throws Throwable {
+
+        try{
+            studentService.populateDemo(n);
+            return  ResponseEntity.ok("Successfully created " + n + " demo students");
+        }catch (RuntimeException runtimeException){
+            return ResponseEntity.badRequest().body("Error: " + runtimeException.getMessage());
+
+        }
+    }
+
 
 }
