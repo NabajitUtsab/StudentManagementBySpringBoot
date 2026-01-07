@@ -3,6 +3,7 @@ package com.example.StudentManagementBySpringBoot.controller;
 import com.example.StudentManagementBySpringBoot.model.Student;
 import com.example.StudentManagementBySpringBoot.service.StudentService;
 import jakarta.validation.Valid;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,6 +90,7 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
+    /// Generating data by default
     @PostMapping("/populate")
     public ResponseEntity<String> populateStudentAPI(@RequestParam int n) throws Throwable {
 
@@ -99,6 +101,32 @@ public class StudentController {
             return ResponseEntity.badRequest().body("Error: " + runtimeException.getMessage());
 
         }
+    }
+
+    //pagination
+    @GetMapping("/page/{name}")
+//    public ResponseEntity<List<Student>> getAllStudentsAPIusingPagination(@PathVariable String name) {
+//        try{
+//            List<Student> studentLists = studentService.findingAllStudentsByName(name);
+//            return new ResponseEntity<>(studentLists,HttpStatus.OK);
+//        }catch (RuntimeException runtimeException){
+//            return ResponseEntity.badRequest().body(null);
+//        }
+//    }
+    public ResponseEntity<List<Student>> getAllStudentsAPIusingPagination(@PathVariable String name,@RequestParam int pageNumber,@RequestParam int pageSize) {
+        try{
+            List<Student> studentLists = studentService.findingAllStudentsByName(name,pageNumber,pageSize);
+            return new ResponseEntity<>(studentLists,HttpStatus.OK);
+        }catch (RuntimeException runtimeException){
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+
+    @GetMapping("/sort")
+    public ResponseEntity<List<Student>> getAllStudentsAPIUsingSorting() {
+        List<Student> studentLists = studentService.sortingAllStudentsByPhone();
+        return new ResponseEntity<>(studentLists,HttpStatus.OK);
     }
 
 

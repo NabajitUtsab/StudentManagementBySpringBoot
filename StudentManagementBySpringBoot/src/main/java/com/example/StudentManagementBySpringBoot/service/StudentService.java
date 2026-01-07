@@ -7,6 +7,10 @@ import com.example.StudentManagementBySpringBoot.repository.StudentRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -91,6 +95,25 @@ public class StudentService {
         student.setBatch(batch);     // ⭐ THIS is the key line
 
         return studentRepo.save(student);
+    }
+
+    //pagination using Pagable.ofSize
+
+//    public List<Student> findingAllStudentsByName(String name) {
+//       return studentRepo.findByNameIgnoreCase(name,Pageable.ofSize(10));
+//    }
+
+    //pagination using PageRequest.of(pageNumber,pageSize)
+
+    public List<Student> findingAllStudentsByName(String name,int pageNumber,int pageSize)  {
+        return studentRepo.findByNameIgnoreCase(name, PageRequest.of(pageNumber,pageSize));
+    }
+
+    // Sorting
+
+    public List<Student> sortingAllStudentsByPhone()
+    {
+      return studentRepo.sortByPhone(Sort.by("phone").descending());
     }
 
 
