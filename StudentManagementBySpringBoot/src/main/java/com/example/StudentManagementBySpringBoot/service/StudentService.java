@@ -111,9 +111,8 @@ public class StudentService {
 
     // Sorting
 
-    public List<Student> sortingAllStudentsByPhone()
-    {
-      return studentRepo.sortByPhone(Sort.by("phone").descending());
+    public List<Student> getStudentsByNameSortedByPhone(String name) {
+        return studentRepo.findByNameIgnoreCaseForSort(name, Sort.by("phone").ascending());
     }
 
 

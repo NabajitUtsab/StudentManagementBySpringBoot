@@ -124,10 +124,14 @@ public class StudentController {
 
 
     @GetMapping("/sort")
-    public ResponseEntity<List<Student>> getAllStudentsAPIUsingSorting() {
-        List<Student> studentLists = studentService.sortingAllStudentsByPhone();
-        return new ResponseEntity<>(studentLists,HttpStatus.OK);
+    public ResponseEntity<List<Student>> getStudentsByNameSortedByPhone(
+            @RequestParam String name) {
+
+        return ResponseEntity.ok(
+                studentService.getStudentsByNameSortedByPhone(name)
+        );
     }
+
 
 
 }

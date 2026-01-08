@@ -24,7 +24,7 @@ public class Student {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String phone;
 
     private LocalDate dob;
