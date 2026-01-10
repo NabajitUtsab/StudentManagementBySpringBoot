@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -28,7 +29,7 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     List<Student> findByNameIgnoreCase(String name , Pageable pageable);
 
     @Query("SELECT s from Student s where s.name = :name")
-    List<Student> findByNameIgnoreCaseForSort(String name, Sort sort);
+    List<Student> findByNameIgnoreCaseForSort(@Param("name") String name, Sort sort);
 
 
 

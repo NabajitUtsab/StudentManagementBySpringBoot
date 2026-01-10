@@ -1,5 +1,6 @@
 package com.example.StudentManagementBySpringBoot.controller;
 
+import com.example.StudentManagementBySpringBoot.exception.GlobalExceptionHandler;
 import com.example.StudentManagementBySpringBoot.model.Student;
 import com.example.StudentManagementBySpringBoot.service.StudentService;
 import jakarta.validation.Valid;
@@ -39,8 +40,8 @@ public class StudentController {
     public ResponseEntity<Student> getStudentAPI(@PathVariable Long id) {
         //Student student = studentService.getStudentById(id);
         //return new ResponseEntity<>(student, HttpStatus.FOUND);
-        return studentService.getStudentById(id)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return studentService.getStudentById(id).
+                map(ResponseEntity::ok).orElseThrow();
     }
 
 
