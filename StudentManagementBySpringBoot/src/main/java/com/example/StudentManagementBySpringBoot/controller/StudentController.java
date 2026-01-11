@@ -38,8 +38,6 @@ public class StudentController {
     //getting by id
     @GetMapping("/id/{id}")
     public ResponseEntity<Student> getStudentAPI(@PathVariable Long id) {
-        //Student student = studentService.getStudentById(id);
-        //return new ResponseEntity<>(student, HttpStatus.FOUND);
         return studentService.getStudentById(id).
                 map(ResponseEntity::ok).orElseThrow();
     }
@@ -49,7 +47,7 @@ public class StudentController {
     @GetMapping("/email/{email}")
     public ResponseEntity<Student> getStudentByEmail(@PathVariable String email) {
 
-        return studentService.getStudentByEmail(email).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return studentService.getStudentByEmail(email).map(ResponseEntity::ok).orElseThrow();
     }
 
 
@@ -115,12 +113,10 @@ public class StudentController {
 //        }
 //    }
     public ResponseEntity<List<Student>> getAllStudentsAPIusingPagination(@PathVariable String name,@RequestParam int pageNumber,@RequestParam int pageSize) {
-        try{
+
             List<Student> studentLists = studentService.findingAllStudentsByName(name,pageNumber,pageSize);
-            return new ResponseEntity<>(studentLists,HttpStatus.OK);
-        }catch (RuntimeException runtimeException){
-            return ResponseEntity.badRequest().body(null);
-        }
+            return ResponseEntity.ok(studentLists);
+
     }
 
 

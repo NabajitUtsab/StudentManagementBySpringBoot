@@ -22,4 +22,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(commonErrorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<CommonResponse> handleRuntimeException(RuntimeException e) {
+        CommonResponse commonErrorResponse = new CommonResponse(
+                Instant.now().toString(),
+                e.getClass().toString(),
+                "Runtime Exception happening"
+        );
+
+        return new ResponseEntity<>(commonErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+
 }

@@ -53,7 +53,8 @@ public class StudentService {
     //update by id
     public Student updateStudentById(Long id, Student student) {
 
-        try {
+        studentRepo.findById(id).orElseThrow();
+
             for (Student stud : studentRepo.findAll()) {
                 if (stud.getId().equals(id)) {
                     stud.setName(student.getName());
@@ -61,20 +62,20 @@ public class StudentService {
                     stud.setPhone(student.getPhone());
                     stud.setDob(student.getDob());
                     stud.setEnrollmentDate(student.getEnrollmentDate());
+                  //  stud.setBatch(student.getBatch());
 
                     return studentRepo.save(stud);
                 }
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+            return null;
     }
 
 
     //delete by id
     public void deleteStudentById(Long id) {
+
+        studentRepo.findById(id).orElseThrow();
         studentRepo.deleteById(Math.toIntExact(id));
     }
 
