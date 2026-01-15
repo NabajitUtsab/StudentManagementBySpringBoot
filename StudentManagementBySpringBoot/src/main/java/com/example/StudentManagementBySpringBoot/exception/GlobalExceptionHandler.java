@@ -33,6 +33,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(commonErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(BatchNotFoundException.class)
+    public ResponseEntity<CommonResponse> handleBatchNotFoundException(BatchNotFoundException e) {
+        CommonResponse commonErrorResponse = new CommonResponse(
+                Instant.now().toString(),
+                e.getClass().toString(),
+                "No Batch Found"
+        );
+
+        return new ResponseEntity<>(commonErrorResponse, HttpStatus.NOT_FOUND);
+    }
+
 
 
 }

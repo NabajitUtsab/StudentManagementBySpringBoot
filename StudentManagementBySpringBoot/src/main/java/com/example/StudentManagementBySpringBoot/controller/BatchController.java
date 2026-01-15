@@ -1,5 +1,6 @@
 package com.example.StudentManagementBySpringBoot.controller;
 
+import com.example.StudentManagementBySpringBoot.exception.BatchNotFoundException;
 import com.example.StudentManagementBySpringBoot.model.Batch;
 import com.example.StudentManagementBySpringBoot.service.BatchService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/batch")
@@ -37,8 +39,12 @@ public class BatchController {
     public ResponseEntity<Object> getBatchAPI(@PathVariable Long id) {
         //Student student = studentService.getStudentById(id);
         //return new ResponseEntity<>(student, HttpStatus.FOUND);
-        return batchService.getBatchById(id)
-                .map(batch -> ResponseEntity.ok(batch)).orElse(ResponseEntity.notFound().build());
+        try {
+            return batchService.getBatchById(id).map(batch -> ResponseEntity.ok(batch)).get();
+
+        }catch (NoSuchElementException e){
+            throw new BatchNotFoundException();
+        }
     }
 
 
